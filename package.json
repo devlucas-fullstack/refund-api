@@ -2,8 +2,10 @@
   "name": "refund-api",
   "version": "1.0.0",
   "description": "API de reembolso",
-  "main": "index.js",
-  "scripts": {},
+  "main": "src/server.ts",
+  "scripts": {
+    "start": "tsx --watch src/server.ts"
+  },
   "author": "Lucas Vinicius",
   "type": "commonjs",
   "license": "ISC",
