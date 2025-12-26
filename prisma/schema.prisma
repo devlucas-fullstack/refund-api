@@ -4,5 +4,49 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = "file:./dev.db"
+}
+
+enum UserRole {
+  employee
+  manager
+}
+
+enum Category {
+  food
+  accommodation
+  services
+  others
+  transport
+}
+
+model User {
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  password String
+  role UserRole @default(employee)
+
+  refunds Refund[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Refund {
+  id String @id @default(uuid())
+  name String
+  amount Float
+  category Category
+  filename String
+
+  userId String @map("user_id")
+  user User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  @@map("refunds")
 }
