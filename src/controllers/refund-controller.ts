@@ -40,7 +40,34 @@ class RefundController {
   }
 
   async index(req: Request, res: Response) {
-    return res.json({ message: "ok" });
+    const querySchema = z.object({
+      name: z.string().optional().default(""),
+    });
+
+    const { name } = querySchema.parse(req.query);
+
+    const refunds = await prisma.refund.findMany({
+      where: {
+        user: {
+          is: {
+            name: {
+              contains: name.trim(),
+            },
+          },
+        },
+      },
+
+      include: {
+        user: {
+          select: {
+            name: true,
+            email: true,
+          },
+        },
+      },
+    });
+
+    return res.json(refunds);
   }
 }
 
