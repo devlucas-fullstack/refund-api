@@ -36,7 +36,11 @@ class RefundController {
       },
     });
 
-    res.json({ message: "ok" });
+    res.status(201).json();
+  }
+
+  async index(req: Request, res: Response) {
+    return res.json({ message: "ok" });
   }
 }
 

@@ -6,5 +6,6 @@ const refundRoutes = Router();
 const refundController = new RefundController();
 
 refundRoutes.post("/", allowRoles("employee"), refundController.create);
+refundRoutes.get("/", allowRoles("manager"), refundController.index);
 
 export { refundRoutes };
