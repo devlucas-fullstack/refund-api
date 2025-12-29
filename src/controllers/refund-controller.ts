@@ -42,11 +42,17 @@ class RefundController {
   async index(req: Request, res: Response) {
     const querySchema = z.object({
       name: z.string().optional().default(""),
+      page: z.coerce.number().optional().default(1),
+      perPage: z.coerce.number().optional().default(10),
     });
 
-    const { name } = querySchema.parse(req.query);
+    const { name, page, perPage } = querySchema.parse(req.query);
+
+    const skip = (page - 1) * perPage;
 
     const refunds = await prisma.refund.findMany({
+      skip,
+      take: perPage,
       where: {
         user: {
           is: {
@@ -56,7 +62,7 @@ class RefundController {
           },
         },
       },
-
+      orderBy: { createdAt: "desc" },
       include: {
         user: {
           select: {
@@ -67,7 +73,27 @@ class RefundController {
       },
     });
 
-    return res.json(refunds);
+    const totalRecords = await prisma.refund.count({
+      where: {
+        user: {
+          name: {
+            contains: name.trim(),
+          },
+        },
+      },
+    });
+
+    const totalPage = Math.ceil(totalRecords / perPage);
+
+    return res.json({
+      refunds,
+      pagination: {
+        page,
+        perPage,
+        totalRecords,
+        totalPage: totalPage > 0 ? totalPage : 1,
+      },
+    });
   }
 }
 
