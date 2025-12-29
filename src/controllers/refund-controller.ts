@@ -95,6 +95,36 @@ class RefundController {
       },
     });
   }
+
+  async show(req: Request, res: Response) {
+    const paramsSchema = z.object({
+      id: z.string().uuid(),
+    });
+
+    const { id } = paramsSchema.parse(req.params);
+
+    const refund = await prisma.refund.findFirst({
+      where: { id },
+      include: {
+        user: {
+          select: {
+            name: true,
+            email: true,
+          },
+        },
+      },
+    });
+
+    if (!refund) {
+      throw new AppError("Reembolso não encontrado", 404);
+    }
+
+    if (req.user?.role === "employee" && refund.userId !== req.user.id) {
+      throw new AppError("Acesso não permitido", 403);
+    }
+
+    res.json(refund);
+  }
 }
 
 export { RefundController };
