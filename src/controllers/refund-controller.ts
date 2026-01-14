@@ -17,10 +17,9 @@ class RefundController {
       name: z.string().min(1, { message: "Informe o nome da solicitação!" }),
       category: categoryEnum,
       amount: z.number().positive(),
-      filename: z.string().min(20),
     });
 
-    const { name, category, amount, filename } = bodySchema.parse(req.body);
+    const { name, category, amount } = bodySchema.parse(req.body);
 
     if (!req.user.id) {
       throw new AppError("Não autorizado!", 401);
@@ -31,7 +30,6 @@ class RefundController {
         name,
         category,
         amount,
-        filename,
         userId: req.user.id,
       },
     });
