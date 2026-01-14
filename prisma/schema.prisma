@@ -40,7 +40,6 @@ model Refund {
   name String
   amount Float
   category Category
-  filename String
 
   userId String @map("user_id")
   user User @relation(fields: [userId], references: [id])
