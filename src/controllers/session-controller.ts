@@ -34,7 +34,7 @@ class SessionController {
       subject: String(user.id),
     });
 
-    res.json({ token });
+    res.json({ token, user });
   }
 }
 
