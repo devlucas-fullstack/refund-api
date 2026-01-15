@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.refundRoutes = void 0;
+const express_1 = require("express");
+const refund_controller_1 = require("../controllers/refund-controller");
+const allow_roles_1 = require("../middlewares/allow-roles");
+const refundRoutes = (0, express_1.Router)();
+exports.refundRoutes = refundRoutes;
+const refundController = new refund_controller_1.RefundController();
+refundRoutes.post("/", (0, allow_roles_1.allowRoles)("employee"), refundController.create);
+refundRoutes.get("/", (0, allow_roles_1.allowRoles)("manager"), refundController.index);
+refundRoutes.get("/:id", (0, allow_roles_1.allowRoles)("manager", "employee"), refundController.show);

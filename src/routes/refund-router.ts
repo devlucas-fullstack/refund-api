@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { RefundController } from "@/controllers/refund-controller";
-import { allowRoles } from "@/middlewares/allow-roles";
+import { RefundController } from "../controllers/refund-controller";
+import { allowRoles } from "../middlewares/allow-roles";
 
 const refundRoutes = Router();
 const refundController = new RefundController();

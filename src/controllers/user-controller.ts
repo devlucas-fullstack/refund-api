@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { z } from "zod";
 import { UserRole } from "@prisma/client";
-import prisma from "@/database/prisma";
+import prisma from "../database/prisma";
 import { hash } from "bcrypt";
-import { AppError } from "@/utils/AppError";
+import { AppError } from "../utils/AppError";
 
 class UserController {
   async create(req: Request, res: Response) {
