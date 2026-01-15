@@ -1,5 +1,5 @@
-import { jwtConfig } from "../configs/jwt";
-import { AppError } from "../utils/AppError";
+import { jwtConfig } from "@/configs/jwt";
+import { AppError } from "@/utils/AppError";
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 

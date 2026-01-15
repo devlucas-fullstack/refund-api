@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { z } from "zod";
-import prisma from "../database/prisma";
-import { AppError } from "../utils/AppError";
+import prisma from "@/database/prisma";
+import { AppError } from "@/utils/AppError";
 import { compare } from "bcrypt";
-import { jwtConfig } from "../configs/jwt";
+import { jwtConfig } from "@/configs/jwt";
 import { sign } from "jsonwebtoken";
 import jwt from "jsonwebtoken";
 
